@@ -1,5 +1,7 @@
 jupyter
+geopandas
 pandas
 numpy
 requests
 sklearn
+pyshp
