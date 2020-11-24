@@ -9,7 +9,7 @@ and the amount of revenue a bus stop generates.
 Our team will be focusing on the Brockton Dataset
 
 # Datasets
-Run code in src
+Can be found in the python notebooks unders the src folder.
 
 # Strategic Questions
 1. What bus routes and stops, if made free, would most benefit low income riders in Massachusetts?
