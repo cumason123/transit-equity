@@ -10,3 +10,12 @@ Our team will be focusing on the Brockton Dataset
 
 # Datasets
 [Brockton RTA bus routes](https://geo-massdot.opendata.arcgis.com/datasets/rta-bus-routes?where=Agency%20%3D%20%27BrocktonAreaRTA%27)
+
+# Strategic Questions
+1. What bus routes and stops, if made free, would most benefit low income riders in Massachusetts?
+
+2. Which towns and districts would most benefit by a policy change to the fare change to these routes?
+
+3. What would the cost be to the MBTA and regional transit authorities for each proposed bus route/stop/zones based on ridership and fare costs?
+
+4. What would the cost be to make an entire regional transit area free and how would this compare?
