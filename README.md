@@ -9,7 +9,7 @@ and the amount of revenue a bus stop generates.
 Our team will be focusing on the Brockton Dataset
 
 # Datasets
-[Brockton RTA bus routes](https://geo-massdot.opendata.arcgis.com/datasets/rta-bus-routes?where=Agency%20%3D%20%27BrocktonAreaRTA%27)
+Run code in src
 
 # Strategic Questions
 1. What bus routes and stops, if made free, would most benefit low income riders in Massachusetts?
