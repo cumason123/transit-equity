@@ -1,15 +1,16 @@
 # Goal
-We want to create a tool which allows Boston officials to know which stops would
+We want to create a tool which allows Boston officials to know which RTA stops would
 provide the most benefit to the public with respect to government income if the 
 stop was removed.
 
 We plan on doing this by ranking bus stops by the area's average income level, 
 and the amount of revenue a bus stop generates.
 
-Our team will be focusing on the Brockton Dataset
-
 # Datasets
 Can be found in the python notebooks unders the src folder.
+
+# Tableau Visualizations
+Can be found [here](https://public.tableau.com/views/final_16067610536060/Dashboard1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link).
 
 # Strategic Questions
 1. What bus routes and stops, if made free, would most benefit low income riders in Massachusetts?
