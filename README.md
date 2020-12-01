@@ -40,7 +40,7 @@ Contains all RTA bus routes in MA. Original data source can be found [here](http
 10. ShapeSTLength - Length of the bus route geomtry line.
 
 ## rta_bus_stop_income_ma.csv
-Contains all RTA bus stops with the census tract that it is part of and the correspoding census tract median household income. Original data source for bus stops can be found [here](https://hub.arcgis.com/datasets/MassDOT::rta-bus-stops) and census income data [here](https://api.census.gov/data/2018/acs/acs5?get=B19013_001E&for=tract:*&in=state:25).
+Contains all RTA bus stops with the census tract that it is part of and the correspoding census tract median household income. Original data source for bus stops can be found [here](https://hub.arcgis.com/datasets/MassDOT::rta-bus-stops), census income data [here](https://api.census.gov/data/2018/acs/acs5?get=B19013_001E&for=tract:*&in=state:25), and census population data [here](https://api.census.gov/data/2018/acs/acs5?get=B00001_001E&for=tract:*&in=state:25).
 1. geometry - Geometry point (containing the latitude and longitude) of the bus stop.
 2. OBJECTID - Id of the bus stop as an object from the datasource. 
 3. stop_id - Id of each bus stop.
@@ -52,13 +52,13 @@ Contains all RTA bus stops with the census tract that it is part of and the corr
 9. census_tract - The census tract that the bus stop is in.
 10. median_household_income - Median household income for the census tract that the bus stop is in.
 11. county - The county number that the bus stop is in.
-12. population - The population of the county that the bus stop is in.
+12. population - The population of the census tract that the bus stop is in.
 
 ## bus_stop_route_mapping.csv
 Contains a mapping for each RTA bus stop to a RTA bus route. This is needed as an intermediate step to join the bus stops, routes, and income together. No new attributes are introduced in this file. 
 
 ## result.csv
-The result of joining all datasets together. This csv file contains RTA bus stops, corresponding bus routes, income, and population. No new attributes are introduced in this file. We use this file for creating Tableau visualizations and analyzing the strategic questions.
+The result of joining all datasets together. This csv file contains RTA bus stops, corresponding bus routes, census tract median household income, and census tract population. No new attributes are introduced in this file. We use this file for creating Tableau visualizations and analyzing the strategic questions.
 
 # Tableau Visualizations
 Can be found [here](https://public.tableau.com/views/final_16067610536060/Dashboard1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link).
