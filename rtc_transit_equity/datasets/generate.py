@@ -119,16 +119,30 @@ def map_stops_to_routes(regenerate=False):
     stops = bus_stops_df[['OBJECTID','geometry','stop_id']]
 
     # map bus stops to routes
-    mapped_routes = [-1] * len(stops)
-
     print(f"Joining bus stops onto routes. this may take a while!")
-    for index, row in tqdm(routes.iterrows()):
-        line = row['geometry']
-        for index2, row2 in stops.iterrows():
-            stop = row2['geometry']
+    mapped_routes = [-1] * len(stops)
+    __TRANSIT_CURRENT_ROUTE_ID = ''
 
-            if line.distance(stop) < 100: # we found this threshold to produce most accurate results 
-                mapped_routes[index2] = row['route_id']
+    def distance_mapper(row): 
+        stop = row['geometry']
+        index = row.name
+        global __TRANSIT_CURRENT_ROUTE_ID
+        
+        # TODO check threshold
+        if stop < 100:
+            # print(__TRANSIT_CURRENT_ROUTE_ID, index, stop)
+            mapped_routes[index] = __TRANSIT_CURRENT_ROUTE_ID
+            
+    def distance_matrix(row):
+        line = row.geometry
+        global __TRANSIT_CURRENT_ROUTE_ID
+        __TRANSIT_CURRENT_ROUTE_ID = row.route_id
+
+        stops_distances = stops.apply(lambda stop: line.distance(stop.geometry), axis=1).to_frame('geometry')
+        
+        stops_distances.apply(distance_mapper, axis=1)
+        
+    routes.apply(distance_matrix, axis=1)
 
     stops['route_id'] = mapped_routes
     stops.to_csv('data/bus_stop_route_mapping.csv')
