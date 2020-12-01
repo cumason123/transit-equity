@@ -99,7 +99,7 @@ def map_stops_to_routes():
         for index2, row2 in stops.iterrows():
             stop = row2['geometry']
 
-            if line.distance(stop) < 100:
+            if line.distance(stop) < 100: # we found this threshold to produce most accurate results 
                 mapped_routes[index2] = row['route_id']
 
     stops['route_id'] = mapped_routes
