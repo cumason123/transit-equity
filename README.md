@@ -1,7 +1,5 @@
 # Goal
-We want to create a tool which allows Boston officials to know which RTA stops would
-provide the most benefit to the public with respect to government income if the 
-stop was removed.
+Explore the feasibility and impact of expanding free RTA bus lines in Massachusetts.
 
 We plan on doing this by ranking bus stops by the area's average income level, 
 and the amount of revenue a bus stop generates.
