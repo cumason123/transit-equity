@@ -162,3 +162,9 @@ def generate():
         "bus_stop_income": bus_stop_income_df,
         "result": result
     }
+
+def main():
+    generate()
+
+if __name__ == "__main__":
+    main()
