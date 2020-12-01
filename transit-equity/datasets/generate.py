@@ -67,8 +67,8 @@ def get_county_population_data() -> pd.DataFrame:
 def map_stops_to_routes():
     """Add stops to routes"""
     # Filepath
-    bus_routes_fp = "RTA_Bus_Routes-shp/RTA_Bus_Routes.shp"
-    bus_stops_fp = "RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"
+    bus_routes_fp = "RTA_Bus_Routes-shp/RTA_Bus_Routes.shp" # Source: https://hub.arcgis.com/datasets/MassDOT::rta-bus-routes?geometry=-82.215%2C40.613%2C-61.121%2C43.468
+    bus_stops_fp = "RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"    # Source: https://hub.arcgis.com/datasets/MassDOT::rta-bus-stops?geometry=-82.218%2C40.640%2C-61.124%2C43.493
 
     # Read the data
     bus_routes_df = gpd.read_file(bus_routes_fp)
