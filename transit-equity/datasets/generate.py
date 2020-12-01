@@ -4,6 +4,7 @@ import numpy as np
 from io import StringIO, BytesIO
 import json
 import os
+import zipfile
 from lib import *
 
 
@@ -66,9 +67,21 @@ def get_county_population_data() -> pd.DataFrame:
 
 def map_stops_to_routes():
     """Add stops to routes"""
+    # URLs
+    BUS_ROUTES_URL = "https://opendata.arcgis.com/datasets/1cb5c63d6f114f8a94c6d5a0e03ae62e_0.zip"
+    BUS_STOPS_URL = "https://opendata.arcgis.com/datasets/9f0b255b1a314b70a396d93d4425f531_1.zip" 
+    BUS_ROUTES_DATA = requests.get(BUS_ROUTES_URL)
+    BUS_STOPS_DATA = requests.get(BUS_STOPS_URL)
+    BUS_ROUTES_ZIP = zipfile.ZipFile(BytesIO(BUS_ROUTES_DATA.content))  
+    BUS_STOPS_ZIP = zipfile.ZipFile(BytesIO(BUS_STOPS_DATA.content)) 
+
+    # extract to folder
+    BUS_ROUTES_ZIP.extractall(path='RTA_Bus_Routes-shp')
+    BUS_STOPS_ZIP.extractall(path='RTA_Bus_Stops-shp/')
+    
     # Filepath
-    bus_routes_fp = "RTA_Bus_Routes-shp/RTA_Bus_Routes.shp" # Source: https://hub.arcgis.com/datasets/MassDOT::rta-bus-routes?geometry=-82.215%2C40.613%2C-61.121%2C43.468
-    bus_stops_fp = "RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"    # Source: https://hub.arcgis.com/datasets/MassDOT::rta-bus-stops?geometry=-82.218%2C40.640%2C-61.124%2C43.493
+    bus_routes_fp = "RTA_Bus_Routes-shp/RTA_Bus_Routes.shp" 
+    bus_stops_fp = "RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"
 
     # Read the data
     bus_routes_df = gpd.read_file(bus_routes_fp)
