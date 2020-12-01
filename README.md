@@ -70,3 +70,5 @@ Can be found [here](https://public.tableau.com/views/final_16067610536060/Dashbo
 3. What would the cost be to the MBTA and regional transit authorities for each proposed bus route/stop/zones based on ridership and fare costs?
 
 4. What would the cost be to make an entire regional transit area free and how would this compare?
+
+We answer these questions in our final report.
