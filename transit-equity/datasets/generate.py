@@ -129,7 +129,7 @@ def generate():
     # drop duplicate bus stops
     bus_stop_income_df = bus_stop_income_df.drop_duplicates(subset=['stop_id'])
     # drop unnecessary columns and rows
-    bus_stop_income_df = bus_stop_income_df.drop(columns=['platform_code', 'zone_id', 'stop_timezone', 'position', 'direction', 'state', 'stop_desc'])
+    bus_stop_income_df = bus_stop_income_df.drop(columns=['tract', 'stop_code', 'location_type', 'parent_station', 'wheelchair_boarding', 'platform_code', 'zone_id', 'stop_timezone', 'position', 'direction', 'state', 'stop_desc'])
     ridership_df = ridership_df.loc[ridership_df['Agency'] != 'Massachusetts Bay Transportation Authority']
 
     bus_stop_income_df.to_csv('data/rta_bus_stop_income_ma.csv')
