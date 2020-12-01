@@ -6,8 +6,11 @@ stop was removed.
 We plan on doing this by ranking bus stops by the area's average income level, 
 and the amount of revenue a bus stop generates.
 
+# Code 
+Can be found in the python notebooks under the src folder.
+
 # Datasets
-Can be found in the python notebooks unders the src folder.
+Can be genreated by running the code under the transit-equity folder.
 
 # Tableau Visualizations
 Can be found [here](https://public.tableau.com/views/final_16067610536060/Dashboard1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link).
