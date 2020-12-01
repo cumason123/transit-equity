@@ -2,6 +2,7 @@ import geopandas as gpd
 import pandas as pd
 import requests
 import os, zipfile
+import io
 
 
 def add_census_tract(dataframe):

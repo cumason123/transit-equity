@@ -8,6 +8,7 @@ import os
 import zipfile
 from tqdm import tqdm
 from rtc_transit_equity.datasets.lib import get_population, bus_stops_median_household_income, get_median_hh_income, add_census_tract
+from time import time
 
 
 stops2ridership = {
@@ -103,12 +104,12 @@ def map_stops_to_routes(regenerate=False):
     BUS_STOPS_ZIP = zipfile.ZipFile(BytesIO(BUS_STOPS_DATA.content)) 
 
     # extract to folder
-    BUS_ROUTES_ZIP.extractall(path='RTA_Bus_Routes-shp')
-    BUS_STOPS_ZIP.extractall(path='RTA_Bus_Stops-shp/')
+    BUS_ROUTES_ZIP.extractall(path='data/RTA_Bus_Routes-shp')
+    BUS_STOPS_ZIP.extractall(path='data/RTA_Bus_Stops-shp/')
     
     # Filepath
-    bus_routes_fp = "RTA_Bus_Routes-shp/RTA_Bus_Routes.shp" 
-    bus_stops_fp = "RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"
+    bus_routes_fp = "data/RTA_Bus_Routes-shp/RTA_Bus_Routes.shp" 
+    bus_stops_fp = "data/RTA_Bus_Stops-shp/RTA_Bus_Stops.shp"
 
     # Read the data
     bus_routes_df = gpd.read_file(bus_routes_fp)
@@ -130,7 +131,6 @@ def map_stops_to_routes(regenerate=False):
         
         # TODO check threshold
         if stop < 100:
-            # print(__TRANSIT_CURRENT_ROUTE_ID, index, stop)
             mapped_routes[index] = __TRANSIT_CURRENT_ROUTE_ID
             
     def distance_matrix(row):
@@ -166,6 +166,7 @@ def generate(regenerate=False):
     
     @param regenerate: boolean indicating whether you should regenerate all data or read locally
     """
+    now = time()
     if not os.path.exists('data'):
         os.makedirs('data')
 
@@ -201,7 +202,7 @@ def generate(regenerate=False):
     # join bus_stop_income_df and map_stops_to_routes to get income for every bus route
     result = get_joined_data()
     result.to_csv('data/result.csv')
-    
+    print(f"Finished all dataset gathering and preprocessing in {time() - now}s")
     return {
         "route_df": route_df,
         "ridership_df": ridership_df,
