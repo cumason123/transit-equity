@@ -116,7 +116,9 @@ def map_stops_to_routes(regenerate=False):
     bus_stops_df = gpd.read_file(bus_stops_fp)
 
     # Pick specific columns
-    routes = bus_routes_df[['OBJECTID','geometry','route_id', 'route_shor', 'route_long']]
+    routes = bus_routes_df[['OBJECTID','geometry','route_id', 'route_shor', 'route_long']].rename(
+        columns={"route_shor": "route_short_name", "route_long": "route_long_name"}
+    )
     stops = bus_stops_df[['OBJECTID','geometry','stop_id']]
 
     # map bus stops to routes
@@ -145,12 +147,14 @@ def map_stops_to_routes(regenerate=False):
     routes.apply(distance_matrix, axis=1)
 
     stops['route_id'] = mapped_routes
-    stops.to_csv('data/bus_stop_route_mapping.csv')
+    stops.to_csv('data/bus_stop_route_mapping.csv', index=False)
     return stops 
 
 
 def get_joined_data(regenerate=False):
     """Returns bus stop area household income data attached with bus routes"""
+    map_stops_to_routes(regenerate)
+
     if not regenerate and os.path.exists('data/result.csv'):
         return pd.read_csv('data/result.csv')
 
@@ -191,17 +195,15 @@ def generate(regenerate=False):
 
     # drop unnecessary columns and rows
     bus_stop_income_df = bus_stop_income_df.drop(columns=['tract', 'stop_code', 'location_type', 'parent_station', 'wheelchair_boarding', 'platform_code', 'zone_id', 'stop_timezone', 'position', 'direction', 'state', 'stop_desc'])
-
-    bus_stop_income_df.to_csv('data/rta_bus_stop_income_ma.csv')
-    route_df.to_csv('data/rta_bus_route_ma.csv')
-    ridership_df.to_csv('data/rta_bus_ridership_ma.csv')
-    county_population_df.to_csv('data/county_population.csv')
-    tract_population_df.to_csv('data/tract_population.csv')
-    map_stops_to_routes()
-
-    # join bus_stop_income_df and map_stops_to_routes to get income for every bus route
     result = get_joined_data()
-    result.to_csv('data/result.csv')
+
+    bus_stop_income_df.to_csv('data/rta_bus_stop_income_ma.csv', index=False)
+    route_df.to_csv('data/rta_bus_route_ma.csv', index=False)
+    ridership_df.to_csv('data/rta_bus_ridership_ma.csv', index=False)
+    county_population_df.to_csv('data/county_population.csv', index=False)
+    tract_population_df.to_csv('data/tract_population.csv', index=False)
+    result.to_csv('data/result.csv', index=False)
+
     print(f"Finished all dataset gathering and preprocessing in {time() - now}s")
     return {
         "route_df": route_df,

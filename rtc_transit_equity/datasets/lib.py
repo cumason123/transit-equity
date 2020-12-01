@@ -61,7 +61,7 @@ def bus_stops_median_household_income(stops_data):
             get_median_hh_income().set_index('tract'), 
             on='census_tract'
         ).rename(columns={'B19013_001E': 'median_household_income'})
-        census_df.to_csv('data/bus_area_income.csv')
+        census_df.to_csv('data/bus_area_income.csv', index=False)
         return census_df
     except:
         raise Exception('You probably need to install rtree or have local file ../data/bus_area_income.csv!')
