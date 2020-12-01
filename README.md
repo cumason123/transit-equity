@@ -44,17 +44,15 @@ Contains all RTA bus stops with the census tract that it is part of and the corr
 1. geometry - Geometry point (containing the latitude and longitude) of the bus stop.
 2. OBJECTID - Id of the bus stop as an object from the datasource. 
 3. stop_id - Id of each bus stop.
-4. stop_code - 
-5. stop_name - Descriptive name of the bus stop (i.e. Belair St at Colonel Bell Drive).
-6. stop_lat - Bus stop latitude, which is extracted from the geometry column for easier access.
-7. stop_lon - Bus stop longitude, which is extracted from the geometry column for easier access.
-8. stop_url - Url with more information on the bus stop.
-9. Agency - Name of the RTA that the stop belongs to.
-10. census_tract -
-11. median_household_income - Median household income for the census tract that the bus stop is in.
-12. county - The county number that the bus stop is in.
-13. population - The population of the county that the bus stop is in.
-14. tract - 
+4. stop_name - Descriptive name of the bus stop (i.e. Belair St at Colonel Bell Drive).
+5. stop_lat - Bus stop latitude, which is extracted from the geometry column for easier access.
+6. stop_lon - Bus stop longitude, which is extracted from the geometry column for easier access.
+7. stop_url - Url with more information on the bus stop.
+8. Agency - Name of the RTA that the stop belongs to.
+9. census_tract - The census tract that the bus stop is in.
+10. median_household_income - Median household income for the census tract that the bus stop is in.
+11. county - The county number that the bus stop is in.
+12. population - The population of the county that the bus stop is in.
 
 ## bus_stop_route_mapping.csv
 Contains a mapping for each RTA bus stop to a RTA bus route. This is needed as an intermediate step to join the bus stops, routes, and income together. No new attributes are introduced in this file. 
