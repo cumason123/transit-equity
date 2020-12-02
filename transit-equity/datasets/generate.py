@@ -99,7 +99,7 @@ def map_stops_to_routes():
         for index2, row2 in stops.iterrows():
             stop = row2['geometry']
 
-            if line.distance(stop) < 100: # we found this threshold to produce most accurate results 
+            if line.distance(stop) < 1e-1: # we found this threshold to produce most accurate results 
                 mapped_routes[index2] = row['route_id']
 
     stops['route_id'] = mapped_routes
@@ -110,12 +110,19 @@ def map_stops_to_routes():
 def get_joined_data():
     """Returns bus stop area household income data attached with bus routes"""
     income = pd.read_csv('data/rta_bus_stop_income_ma.csv', index_col=0)
-    stop_route_map = pd.read_csv('data/bus_stop_route_mapping.csv', index_col=0)
-    result = pd.merge(income, stop_route_map, on='stop_id', how='inner')
 
-    # remove duplicate columns
-    result.drop(result.filter(regex='_y$').columns.tolist(),axis=1, inplace=True)
+    # get back route names
+    routes = pd.read_csv('data/rta_bus_route_ma.csv', index_col=0, usecols=["route_id" ,"route_short_name", "route_long_name"])
+    stop_route_map = pd.read_csv('data/bus_stop_route_mapping.csv', index_col=0)
+    stop_route_map = pd.merge(routes, stop_route_map, on='route_id', how='inner')
+
+    # merge income and routes
+    result = pd.merge(income, stop_route_map, on='stop_id', how='inner', suffixes=('','_y'))
     result = result.rename(columns={"OBJECTID_x": "OBJECTID", "geometry_x": "geometry"})
+
+    # remove duplicate columns and rows
+    result.drop(result.filter(regex='_y$').columns.tolist(),axis=1, inplace=True)
+    result = result.drop_duplicates(subset=['stop_id'])
 
     return result
 
