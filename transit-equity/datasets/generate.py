@@ -138,7 +138,7 @@ def generate():
     bus_stop_income_df = bus_stop_income_df[bus_stop_income_df.median_household_income > 0] 
     bus_stop_income_df.dropna()
     # rename population column
-    bus_stop_income_df = bus_stop_income_df.rename(columns={"B00001_001E": "population"})
+    bus_stop_income_df = bus_stop_income_df.rename(columns={"B01003_001E": "population"})
     # drop duplicate bus stops
     bus_stop_income_df = bus_stop_income_df.drop_duplicates(subset=['stop_id'])
     # drop unnecessary columns and rows
