@@ -2,10 +2,17 @@ import geopandas as gpd
 import pandas as pd
 import requests
 import os
+from io import BytesIO
+import zipfile
 
 
 def add_census_tract(dataframe):
-    polygons = gpd.read_file("../data/tl_2019_25_tract.shp")
+    CENSUS_TRACT_URL = "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_25_tract.zip"
+    DATA = requests.get(CENSUS_TRACT_URL)
+    ZIP_DATA = zipfile.ZipFile(BytesIO(DATA.content))  
+    ZIP_DATA.extractall(path='tl_2019_25_tract-shp/')
+
+    polygons = gpd.read_file("tl_2019_25_tract-shp/tl_2019_25_tract.shp")
     polygons = polygons.rename(columns={"TRACTCE": "census_tract"}, index=str)
     polygons = polygons.to_crs("EPSG:4326")
     gdf = dataframe
@@ -65,7 +72,7 @@ def get_population():
     American Community Survey (ACS) 2018 Census data used.
     Specific table: ACS 2018 5-year detailed table "B00001_001E"
     '''
-    URL = "https://api.census.gov/data/2018/acs/acs5?get=B00001_001E&for=tract:*&in=state:25"
+    URL = "https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=tract:*&in=state:25"
     response = requests.get(url = URL)
     data = response.json()
 

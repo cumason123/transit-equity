@@ -76,7 +76,7 @@ def map_stops_to_routes():
     BUS_STOPS_ZIP = zipfile.ZipFile(BytesIO(BUS_STOPS_DATA.content)) 
 
     # extract to folder
-    BUS_ROUTES_ZIP.extractall(path='RTA_Bus_Routes-shp')
+    BUS_ROUTES_ZIP.extractall(path='RTA_Bus_Routes-shp/')
     BUS_STOPS_ZIP.extractall(path='RTA_Bus_Stops-shp/')
     
     # Filepath
