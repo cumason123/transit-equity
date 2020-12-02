@@ -112,6 +112,11 @@ def get_joined_data():
     income = pd.read_csv('data/rta_bus_stop_income_ma.csv', index_col=0)
     stop_route_map = pd.read_csv('data/bus_stop_route_mapping.csv', index_col=0)
     result = pd.merge(income, stop_route_map, on='stop_id', how='inner')
+
+    # remove duplicate columns
+    result.drop(result.filter(regex='_y$').columns.tolist(),axis=1, inplace=True)
+    result = result.rename(columns={"OBJECTID_x": "OBJECTID", "geometry_x": "geometry"})
+
     return result
 
 
