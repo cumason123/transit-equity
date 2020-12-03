@@ -69,9 +69,9 @@ def bus_stops_median_household_income(stops_data, regenerate=False):
 
 def get_population():
     '''
-    Returns Pandas DataFrame representation Unweighted Sample Count of the Population by Census Tract for MA.
+    Returns Pandas DataFrame representation Total Population by Census Tract for MA.
     American Community Survey (ACS) 2018 Census data used.
-    Specific table: ACS 2018 5-year detailed table "B00001_001E"
+    Specific table: ACS 2018 5-year detailed table "B01003_001E"
     '''
     URL = "https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=tract:*&in=state:25"
     response = requests.get(url = URL)
