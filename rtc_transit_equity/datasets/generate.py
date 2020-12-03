@@ -195,13 +195,14 @@ def generate(regenerate=False):
 
     # drop unnecessary columns and rows
     bus_stop_income_df = bus_stop_income_df.drop(columns=['tract', 'stop_code', 'location_type', 'parent_station', 'wheelchair_boarding', 'platform_code', 'zone_id', 'stop_timezone', 'position', 'direction', 'state', 'stop_desc'])
-    result = get_joined_data()
 
     bus_stop_income_df.to_csv('data/rta_bus_stop_income_ma.csv', index=False)
     route_df.to_csv('data/rta_bus_route_ma.csv', index=False)
     ridership_df.to_csv('data/rta_bus_ridership_ma.csv', index=False)
     county_population_df.to_csv('data/county_population.csv', index=False)
     tract_population_df.to_csv('data/tract_population.csv', index=False)
+
+    result = get_joined_data()
     result.to_csv('data/result.csv', index=False)
 
     print(f"Finished all dataset gathering and preprocessing in {time() - now}s")
