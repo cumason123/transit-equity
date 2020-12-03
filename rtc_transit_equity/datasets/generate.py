@@ -26,12 +26,12 @@ stops2ridership = {
 }
 
 
-def get_bus_stop_data() -> pd.DataFrame:
+def get_bus_stop_data(regenerate) -> pd.DataFrame:
     """Get MA data for RTA bus stops"""
     RTA_STOPS_URL = 'https://gis.massdot.state.ma.us/arcgis/rest/services/Multimodal/RTAs/FeatureServer/1/query?where=1%3D1&outFields=*&outSR=4326&f=json'
     RTA_STOPS_DATA = requests.get(RTA_STOPS_URL)
     stops_data = json.loads(RTA_STOPS_DATA.content)['features']
-    return bus_stops_median_household_income(stops_data)
+    return bus_stops_median_household_income(stops_data, regenerate)
 
 
 def get_route_data() -> pd.DataFrame:
@@ -192,7 +192,7 @@ def generate(regenerate=False):
     county_population_df = get_county_population_data(regenerate)
 
     # join population_df to bus_area_income_df
-    bus_stop_income_df = pd.merge(get_bus_stop_data(), tract_population_df, how='inner', left_on='census_tract', right_on='tract')
+    bus_stop_income_df = pd.merge(get_bus_stop_data(regenerate), tract_population_df, how='inner', left_on='census_tract', right_on='tract')
 
     # drop negative median household values data
     bus_stop_income_df['median_household_income'] = bus_stop_income_df['median_household_income'].astype(float)

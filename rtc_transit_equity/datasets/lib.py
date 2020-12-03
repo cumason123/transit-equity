@@ -36,11 +36,11 @@ def get_median_hh_income():
     return median_income_df
 
 
-def bus_stops_median_household_income(stops_data):
+def bus_stops_median_household_income(stops_data, regenerate=False):
     '''
     Adds household median income to stops data
     '''
-    if os.path.exists('data/bus_area_income.csv'):
+    if not regenerate and os.path.exists('data/bus_area_income.csv'):
         return pd.read_csv('data/bus_area_income.csv')
     
     try:
