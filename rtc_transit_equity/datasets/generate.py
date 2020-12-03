@@ -7,8 +7,7 @@ import geopandas as gpd
 import os
 import zipfile
 from rtc_transit_equity.datasets.lib import get_population, bus_stops_median_household_income, get_median_hh_income, add_census_tract
-from time import time
-
+import time
 
 stops2ridership = {
     'VineyardRTA': "Woods Hole, Martha's Vineyard and Nantucket Steamship Authority",
@@ -92,7 +91,6 @@ def map_stops_to_routes(regenerate=False):
     """Add stops to routes"""
     if not regenerate and os.path.exists('data/bus_stop_route_mapping.csv'):
         return pd.read_csv('data/bus_stop_route_mapping.csv')
-    
 
     # URLs
     BUS_ROUTES_URL = "https://opendata.arcgis.com/datasets/1cb5c63d6f114f8a94c6d5a0e03ae62e_0.zip"
@@ -121,40 +119,24 @@ def map_stops_to_routes(regenerate=False):
     stops = bus_stops_df[['OBJECTID','geometry','stop_id']]
 
     # map bus stops to routes
-    print(f"Joining bus stops onto routes. this may take a while!")
-    mapped_routes = [-1] * len(stops)
-    __TRANSIT_CURRENT_ROUTE_ID = ''
+    print(f"Joining bus stops onto routes. This may take a while!")
+    now = time.time()
 
-    def distance_mapper(row): 
-        distance = row['distance']
-        index = row.name
-        global __TRANSIT_CURRENT_ROUTE_ID
-        
-        # TODO check threshold
-        if distance < 1e-3:
-            mapped_routes[index] = __TRANSIT_CURRENT_ROUTE_ID
-            
-    def distance_matrix(row):
-        line = row.geometry
-        global __TRANSIT_CURRENT_ROUTE_ID
+    def get_closest_route_id(stop):
+        # Index of geometry field in pandas table
 
-        __TRANSIT_CURRENT_ROUTE_ID = row.route_id
+        route_distances_matrix = routes.geometry.apply(lambda line: stop.distance(line))
+        closest_route_index = np.argmin(route_distances_matrix)
+        return routes.iloc[closest_route_index].route_id
 
-        stops_distances = stops.apply(lambda stop: line.distance(stop.geometry), axis=1).to_frame('distance')
-        
-        stops_distances.apply(distance_mapper, axis=1)
-        
-    routes.apply(distance_matrix, axis=1)
-
-    stops['route_id'] = mapped_routes
+    stops['route_id'] = stops.geometry.apply(get_closest_route_id)
     stops.to_csv('data/bus_stop_route_mapping.csv', index=False)
+
     return stops 
 
 
 def get_joined_data(regenerate=False):
     """Returns bus stop area household income data attached with bus routes"""
-    map_stops_to_routes(regenerate)
-
     if not regenerate and os.path.exists('data/result.csv'):
         return pd.read_csv('data/result.csv')
 
@@ -162,7 +144,7 @@ def get_joined_data(regenerate=False):
 
     # get back route names
     routes = pd.read_csv('data/rta_bus_route_ma.csv', index_col=0, usecols=["route_id" ,"route_short_name", "route_long_name"])
-    stop_route_map = pd.read_csv('data/bus_stop_route_mapping.csv', index_col=0)
+    stop_route_map = map_stops_to_routes(regenerate)
     stop_route_map = pd.merge(routes, stop_route_map, on='route_id', how='inner')
 
     # merge income and routes
@@ -182,7 +164,7 @@ def generate(regenerate=False):
     
     @param regenerate: boolean indicating whether you should regenerate all data or read locally
     """
-    now = time()
+    now = time.time()
     if not os.path.exists('data'):
         os.makedirs('data')
 
@@ -214,10 +196,10 @@ def generate(regenerate=False):
     county_population_df.to_csv('data/county_population.csv', index=False)
     tract_population_df.to_csv('data/tract_population.csv', index=False)
 
-    result = get_joined_data()
+    result = get_joined_data(regenerate)
     result.to_csv('data/result.csv', index=False)
 
-    print(f"Finished all dataset gathering and preprocessing in {time() - now}s")
+    print(f"Finished all dataset gathering and preprocessing in {time.time() - now}s")
     return {
         "route_df": route_df,
         "ridership_df": ridership_df,
