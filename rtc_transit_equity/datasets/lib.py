@@ -73,7 +73,7 @@ def get_population():
     American Community Survey (ACS) 2018 Census data used.
     Specific table: ACS 2018 5-year detailed table "B00001_001E"
     '''
-    URL = "https://api.census.gov/data/2018/acs/acs5?get=B00001_001E&for=tract:*&in=state:25"
+    URL = "https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=tract:*&in=state:25"
     response = requests.get(url = URL)
     data = response.json()
 
