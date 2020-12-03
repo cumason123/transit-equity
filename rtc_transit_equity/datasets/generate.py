@@ -132,7 +132,7 @@ def map_stops_to_routes(regenerate=False):
         global __TRANSIT_CURRENT_ROUTE_ID
         
         # TODO check threshold
-        if stop < 100:
+        if stop < 1e-1:
             mapped_routes[index] = __TRANSIT_CURRENT_ROUTE_ID
             
     def distance_matrix(row):
@@ -159,8 +159,20 @@ def get_joined_data(regenerate=False):
         return pd.read_csv('data/result.csv')
 
     income = pd.read_csv('data/rta_bus_stop_income_ma.csv', index_col=0)
+
+    # get back route names
+    routes = pd.read_csv('data/rta_bus_route_ma.csv', index_col=0, usecols=["route_id" ,"route_short_name", "route_long_name"])
     stop_route_map = pd.read_csv('data/bus_stop_route_mapping.csv', index_col=0)
-    result = pd.merge(income, stop_route_map, on='stop_id', how='inner')
+    stop_route_map = pd.merge(routes, stop_route_map, on='route_id', how='inner')
+
+    # merge income and routes
+    result = pd.merge(income, stop_route_map, on='stop_id', how='inner', suffixes=('','_y'))
+    result = result.rename(columns={"OBJECTID_x": "OBJECTID", "geometry_x": "geometry"})
+
+    # remove duplicate columns and rows
+    result.drop(result.filter(regex='_y$').columns.tolist(),axis=1, inplace=True)
+    result = result.drop_duplicates(subset=['stop_id'])
+
     return result
 
 
