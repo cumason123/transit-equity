@@ -8,4 +8,4 @@ pyshp
 matplotlib
 xlrd
 Rtree
-
+tqdm
