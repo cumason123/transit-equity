@@ -126,20 +126,21 @@ def map_stops_to_routes(regenerate=False):
     __TRANSIT_CURRENT_ROUTE_ID = ''
 
     def distance_mapper(row): 
-        stop = row['geometry']
+        distance = row['distance']
         index = row.name
         global __TRANSIT_CURRENT_ROUTE_ID
         
         # TODO check threshold
-        if stop < 1e-1:
+        if distance < 1e-3:
             mapped_routes[index] = __TRANSIT_CURRENT_ROUTE_ID
             
     def distance_matrix(row):
         line = row.geometry
         global __TRANSIT_CURRENT_ROUTE_ID
+
         __TRANSIT_CURRENT_ROUTE_ID = row.route_id
 
-        stops_distances = stops.apply(lambda stop: line.distance(stop.geometry), axis=1).to_frame('geometry')
+        stops_distances = stops.apply(lambda stop: line.distance(stop.geometry), axis=1).to_frame('distance')
         
         stops_distances.apply(distance_mapper, axis=1)
         
