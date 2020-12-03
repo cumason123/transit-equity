@@ -6,7 +6,6 @@ import json
 import geopandas as gpd
 import os
 import zipfile
-from tqdm import tqdm
 from rtc_transit_equity.datasets.lib import get_population, bus_stops_median_household_income, get_median_hh_income, add_census_tract
 from time import time
 
