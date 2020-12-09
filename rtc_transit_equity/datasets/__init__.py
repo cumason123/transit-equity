@@ -1,1 +1,1 @@
-from rtc_transit_equity.datasets.generate import generate
+from rtc_transit_equity.datasets.generate import generate, stops2ridership

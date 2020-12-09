@@ -136,7 +136,10 @@ def map_stops_to_routes(regenerate=False):
 
 
 def get_joined_data(regenerate=False):
-    """Returns bus stop area household income data attached with bus routes"""
+    """Returns bus stop area household income data attached with bus routes
+    
+    Assumes rta_bus_stop_income_ma.csv already exists (aka variable bus_stop_income_df)
+    """
     if not regenerate and os.path.exists('data/result.csv'):
         return pd.read_csv('data/result.csv')
 
@@ -168,7 +171,8 @@ def generate(regenerate=False):
     if not os.path.exists('data'):
         os.makedirs('data')
 
-    route_df = get_route_data()
+    routes_df = get_route_data()
+    
     tract_population_df = get_tract_population_data(regenerate)
     ridership_df = get_ridership_data(regenerate)
     county_population_df = get_county_population_data(regenerate)
@@ -191,7 +195,7 @@ def generate(regenerate=False):
     bus_stop_income_df = bus_stop_income_df.drop(columns=['tract', 'stop_code', 'location_type', 'parent_station', 'wheelchair_boarding', 'platform_code', 'zone_id', 'stop_timezone', 'position', 'direction', 'state', 'stop_desc'])
 
     bus_stop_income_df.to_csv('data/rta_bus_stop_income_ma.csv', index=False)
-    route_df.to_csv('data/rta_bus_route_ma.csv', index=False)
+    routes_df.to_csv('data/rta_bus_route_ma.csv', index=False)
     ridership_df.to_csv('data/rta_bus_ridership_ma.csv', index=False)
     county_population_df.to_csv('data/county_population.csv', index=False)
     tract_population_df.to_csv('data/tract_population.csv', index=False)
@@ -201,7 +205,7 @@ def generate(regenerate=False):
 
     print(f"Finished all dataset gathering and preprocessing in {time.time() - now}s")
     return {
-        "route_df": route_df,
+        "routes_df": routes_df,
         "ridership_df": ridership_df,
         "tract_population_df": tract_population_df,
         "county_population_df": county_population_df,
