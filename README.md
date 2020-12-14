@@ -3,8 +3,12 @@ Explore the feasibility and impact of expanding free RTA bus lines in Massachuse
 
 We plan on doing this by ranking bus stops based on area's average income level, population and the amount of revenue a bus stop generates.
 
-# Code 
-rta_aggregation.ipynb (found under the src folder) is the main notebook that we use to draw conclusions from our datasets in order to answer the strategic questions. 
+# Installation
+Install rtc_transit_equity locally. For example, call the following code snippet from within the directory `transit-equity`:
+
+```
+pip3 install .
+```
 
 # Datasets
 We pulled data using the following datasets:
@@ -110,4 +114,4 @@ Can be found [here](https://public.tableau.com/views/final_16067610536060/Dashbo
 
 4. What would the cost be to make an entire regional transit area free and how would this compare?
 
-We answer these questions in our final report.
+We answer these questions in our final report, and also here: [Strategic Questions](https://github.com/cumason123/transit-equity/blob/master/notebooks/StrategicQuestions.ipynb).
