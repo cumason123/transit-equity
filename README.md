@@ -7,8 +7,11 @@ We plan on doing this by ranking bus stops based on area's average income level,
 Install rtc_transit_equity locally. For example, call the following code snippet from within the directory `transit-equity`:
 
 ```
+pip3 install -r requirements.txt
 pip3 install .
 ```
+
+If you have difficulty installing Rtree or xlrd, please see the [rtree docs](https://toblerity.org/rtree/) for installation assistance. 
 
 # Datasets
 We pulled data using the following datasets:
