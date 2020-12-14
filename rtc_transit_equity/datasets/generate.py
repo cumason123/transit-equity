@@ -19,8 +19,9 @@ stops2ridership = {
     'MerrimackValleyRTA': "Merrimack Valley Regional Transit Authority",
     'PioneerValleyRTA': 'Pioneer Valley Transit Authority',
     'MetroWestRTA': 'MetroWest Regional Transit Authority',
-    'WRTA': 'Worcester Regional Transit Authority COA',
-    'BrocktonAreaRTA': 'Brockton Area Transit Authority'
+    'WRTA': 'Worcester Regional Transit Authority',
+    'BrocktonAreaRTA': 'Brockton Area Transit Authority',
+    'SoutheasternRTA': 'Southeastern Regional Transit Authority'
 }
 
 
