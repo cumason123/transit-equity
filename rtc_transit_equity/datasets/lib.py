@@ -38,7 +38,7 @@ def get_median_hh_income():
 
 def bus_stops_median_household_income(stops_data, regenerate=False):
     '''
-    Adds household median income to stops data
+    Appends household median income field onto Bus Stop Geometry JSON
     '''
     if not regenerate and os.path.exists('data/bus_area_income.csv'):
         return pd.read_csv('data/bus_area_income.csv')

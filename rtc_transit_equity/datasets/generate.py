@@ -25,7 +25,7 @@ stops2ridership = {
 
 
 def get_bus_stop_data(regenerate) -> pd.DataFrame:
-    """Get MA data for RTA bus stops"""
+    """Get MA Bus Stop Geometry JSON"""
     RTA_STOPS_URL = 'https://gis.massdot.state.ma.us/arcgis/rest/services/Multimodal/RTAs/FeatureServer/1/query?where=1%3D1&outFields=*&outSR=4326&f=json'
     RTA_STOPS_DATA = requests.get(RTA_STOPS_URL)
     stops_data = json.loads(RTA_STOPS_DATA.content)['features']
@@ -33,7 +33,7 @@ def get_bus_stop_data(regenerate) -> pd.DataFrame:
 
 
 def get_route_data() -> pd.DataFrame:
-    """Get route data for RTA's"""
+    """Get Bus Route Geometry CSV for RTA's"""
     RTA_ROUTE_URL = 'https://opendata.arcgis.com/datasets/1cb5c63d6f114f8a94c6d5a0e03ae62e_0.csv?outSR=%7B%22latestWkid%22%3A3857%2C%22wkid%22%3A102100%7D'
     RTA_ROUTE_DATA = requests.get(RTA_ROUTE_URL)
     return pd.read_csv(StringIO(RTA_ROUTE_DATA.content.decode())).drop(
@@ -46,7 +46,7 @@ def get_route_data() -> pd.DataFrame:
 
 
 def get_ridership_data(regenerate=False) -> pd.DataFrame:
-    """Get ridership data for RTA's"""
+    """Get RTA Ridership XLSX"""
     if not regenerate and os.path.exists('data/rta_bus_ridership_ma.csv'):
         return pd.read_csv('data/rta_bus_ridership_ma.csv')
     RTA_RIDERSHIP_URL = 'https://www.transit.dot.gov/sites/fta.dot.gov/files/2020-10/August%202020%20Adjusted%20Database.xlsx'
@@ -88,7 +88,13 @@ def get_county_population_data(regenerate=False) -> pd.DataFrame:
 
 
 def map_stops_to_routes(regenerate=False):
-    """Add stops to routes"""
+    """
+    Add stops to routes
+    
+    Assigns each bus stop to a route by calculating the
+    distance between each route to bus stop pair, and assigning
+    a bus stop to its geometrically closest bus route.
+    """
     if not regenerate and os.path.exists('data/bus_stop_route_mapping.csv'):
         return pd.read_csv('data/bus_stop_route_mapping.csv')
 
