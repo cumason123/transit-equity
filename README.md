@@ -31,14 +31,14 @@ We pulled data using the following datasets:
 After pulling this data, we preprocess it to feature engineer our internal csv files. To pull the data and preprocess simply run the following code:
 
 ```python
-from rtc_transit_equity import generate
+from rtc_transit_equity.datasets import generate
 data = generate()
 ```
 
 The above code will generate a data folder and populate it with the necessary datasets. The variable data will be a dictionary containing all our significant datasets. You may view [Strategic Questions](https://github.com/cumason123/transit-equity/blob/master/notebooks/StrategicQuestions.ipynb) on example usage. Subsequent calls to generate will use the local file cached results. You can circumvent these local cache files by using the following code snippet:
 
 ```python
-from rtc_transit_equity import generate
+from rtc_transit_equity.datasets import generate
 data = generate(regenerate=True)
 ```
 
